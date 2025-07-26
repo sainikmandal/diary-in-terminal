@@ -1,0 +1,7 @@
+*.test
+*.out
+.env
+.env.local
+*.temp
+*.tmp
+
