@@ -1,28 +1,22 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
-	"os/signal"
-	"time"
+	"strings"
 )
 
 func main() {
+	reader := bufio.NewReader(os.Stdin)
 
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt)
-
-	fmt.Println("Press Ctrl+C to stop the program...")
-	ticker := time.NewTicker(1 * time.Second)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
-			fmt.Println("hello from go")
-		case <-stop:
-			fmt.Println("Stopping the program...")
-			return
-		}
+	fmt.Print("Enter your name: ")
+	name, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("Error reading input:", err)
+		return
 	}
+
+	name = strings.TrimSpace(name)
+	fmt.Printf("Hello %s\n", name)
 }
